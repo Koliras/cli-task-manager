@@ -1,10 +1,12 @@
 package cmd
 
 import (
-  "fmt"
-  "errors"
+	"fmt"
+	"os"
+	"strings"
 
-  "github.com/spf13/cobra"
+	"github.com/Koliras/cli-task-manager/db"
+	"github.com/spf13/cobra"
 )
 
 func init() {
@@ -14,11 +16,13 @@ func init() {
 var addCmd = &cobra.Command{
   Use:   "add",
   Short: "Add the task to the list",
-  RunE: func(cmd *cobra.Command, args []string) error {
-      fmt.Println("Temporary add content")
-      if false {
-          return errors.New("Some error") 
+  Run: func(cmd *cobra.Command, args []string) {
+      task := strings.Join(args, " ")
+      _, err := db.CreateTask(task)
+      if err != nil {
+          fmt.Println("Something went wrong:", err.Error())
+          os.Exit(1)
       }
-      return nil
+      fmt.Println("Added task to the list")
   },
 }

@@ -70,6 +70,21 @@ func DeleteTask (key int) error {
         return b.Delete(itob(key))
     })
 }
+
+func EditTask (key int, newContent string) error {
+    return db.Update(func(tx *bolt.Tx) error {
+        b := tx.Bucket([]byte("tasks"))
+ 
+        byteKey := itob(key)
+
+        err := b.Delete(byteKey)
+        if err != nil {
+            return err
+        }
+        return b.Put(byteKey, []byte(newContent))
+    })
+}
+
 func itob(v int) []byte {
     b := make([]byte, 8)
     binary.BigEndian.PutUint64(b, uint64(v))

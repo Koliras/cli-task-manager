@@ -8,14 +8,14 @@ import (
 )
 
 func init() {
-  RootCmd.AddCommand(addCmd)
+  RootCmd.AddCommand(listCmd)
 }
 
-var addCmd = &cobra.Command{
-  Use:   "add",
-  Short: "Add the task to the list",
+var listCmd = &cobra.Command{
+  Use:   "list",
+  Short: "Show the list of all your incomplete tasks",
   RunE: func(cmd *cobra.Command, args []string) error {
-      fmt.Println("Temporary add content")
+      fmt.Println("Temporary list content")
       if false {
           return errors.New("Some error") 
       }
